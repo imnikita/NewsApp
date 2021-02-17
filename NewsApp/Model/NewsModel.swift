@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct News{
+struct NewsModel{
     let source: String
     let author: String
     let title: String
