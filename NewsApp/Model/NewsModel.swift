@@ -8,10 +8,10 @@
 import Foundation
 
 struct NewsModel{
-    let source: String
-    let author: String
-    let title: String
-    let image: String
-    let postTime: String
-    let urlToSite: String
+    private(set) public var source: String?
+    private(set) public var author: String?
+    private(set) public var title: String?
+    private(set) public var postTime: String?
+    private(set) public var urlToImage: URL?
+    private(set) public var urlToSite: URL?
 }

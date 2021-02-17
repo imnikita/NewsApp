@@ -17,6 +17,7 @@
 		119DE2AE25DC537D00568D7C /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DE2AD25DC537D00568D7C /* NewsModel.swift */; };
 		119DE2B225DC591100568D7C /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DE2B125DC591100568D7C /* RequestManager.swift */; };
 		119DE2BE25DC6EE500568D7C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 119DE2BD25DC6EE500568D7C /* SwiftyJSON */; };
+		11C542D125DD0B8D007D5163 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C542D025DD0B8D007D5163 /* extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		119DE2A725DC504000568D7C /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		119DE2AD25DC537D00568D7C /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		119DE2B125DC591100568D7C /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		11C542D025DD0B8D007D5163 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				119DE29625DC40AB00568D7C /* Assets.xcassets */,
 				119DE29825DC40AB00568D7C /* LaunchScreen.storyboard */,
 				119DE29B25DC40AB00568D7C /* Info.plist */,
+				11C542D025DD0B8D007D5163 /* extensions.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				119DE29225DC40A600568D7C /* NewsTimelineVC.swift in Sources */,
 				119DE2A825DC504100568D7C /* NewsCell.swift in Sources */,
 				119DE28E25DC40A600568D7C /* AppDelegate.swift in Sources */,
+				11C542D125DD0B8D007D5163 /* extensions.swift in Sources */,
 				119DE2B225DC591100568D7C /* RequestManager.swift in Sources */,
 				119DE2AE25DC537D00568D7C /* NewsModel.swift in Sources */,
 				119DE29025DC40A600568D7C /* SceneDelegate.swift in Sources */,
