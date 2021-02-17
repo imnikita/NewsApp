@@ -19,7 +19,7 @@ protocol RequestMamagerDelegate {
 struct RequestManager{
     
     
-    var delegat: RequestMamagerDelegate?
+    var delegate: RequestMamagerDelegate?
     
     func getData(){
         
@@ -29,13 +29,13 @@ struct RequestManager{
         let session = URLSession(configuration: .default)
         let dataTask = session.dataTask(with: request) { (data, response, error) in
             if error != nil{
-                self.delegat?.didFailWithError(error: error!)
+                self.delegate?.didFailWithError(error: error!)
                 return
             }
             if let saveData = data{
                 do{
                     let json = try JSON(data: saveData)
-                    self.delegat?.didUpdateWeather(self, jsonData: json)
+                    self.delegate?.didUpdateWeather(self, jsonData: json)
                 }
                 catch{
                     print(error)
