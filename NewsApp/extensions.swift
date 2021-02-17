@@ -21,3 +21,33 @@ extension UIImageView {
         }
     }
 }
+
+
+extension String{
+    func truncateAll(after char: String) -> String{
+                var title = ""
+                if !self.contains(char){
+                    return self
+                }else if let index = self.range(of: char)?.lowerBound {
+                    let substring = self[..<index]
+                    title = String(substring)
+                }
+                return title
+    }
+
+
+    func dateStrFormating() -> String{
+        var dateToReturn = self.truncateAll(after: ".")
+        dateToReturn = dateToReturn.replacingOccurrences(of: "T", with: " ")
+         
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let dateFormatterSet = DateFormatter()
+        dateFormatterSet.dateFormat = "dd.MM.yyyy HH:mm"
+       
+        
+        let date = dateFormatterGet.date(from: dateToReturn)
+        return dateFormatterSet.string(from: date ?? Date())
+    }
+}

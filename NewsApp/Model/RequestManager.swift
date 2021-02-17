@@ -21,6 +21,9 @@ struct RequestManager{
     
     var delegate: RequestMamagerDelegate?
     
+    static var baseURL = URLComponents(string: "https://newsapi.org")
+    static let apiToken = "4e85f6e8b5f5497cb1e115bbbd64e9c2"
+    
     func getData(){
         
     let initialUrl = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=4e85f6e8b5f5497cb1e115bbbd64e9c2")

@@ -9,12 +9,16 @@ import UIKit
 import SwiftyJSON
 import SafariServices
 
+
 class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var requestManager = RequestManager()
     var articlesArray = [NewsModel]()
     
+    var refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var newsTimelineTable: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +27,18 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
         requestManager.delegate = self
         newsTimelineTable.rowHeight = 175
         requestManager.getData()
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        newsTimelineTable.addSubview(refreshControl)
+        
     }
     
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        requestManager.getData()
+        refreshControl.endRefreshing()
+    }
     
     
 // MARK: - UITableViewDelegate methods
@@ -67,8 +81,10 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
 extension NewsTimelineVC: RequestMamagerDelegate{
     func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
+        articlesArray = []
+
         for article in 0...jsonData["articles"].count{
-            if let publishedTime = jsonData["articles"][article]["publishedAt"].string,
+            if let publishedTime = jsonData["articles"][article]["publishedAt"].string?.dateStrFormating(),
                let title = jsonData["articles"][article]["title"].string,
                let source = jsonData["articles"][article]["source"]["name"].string,
                let author = jsonData["articles"][article]["author"].string,
@@ -80,7 +96,6 @@ extension NewsTimelineVC: RequestMamagerDelegate{
         }
         DispatchQueue.main.async {
             self.newsTimelineTable.reloadData()
-            print(self.articlesArray)
         }
     }
     
