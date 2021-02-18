@@ -38,7 +38,7 @@ extension String{
 
 
     func dateStrFormating() -> String{
-        var dateToReturn = self.truncateAll(after: ".")
+        var dateToReturn = self.truncateAll(after: "Z")
         dateToReturn = dateToReturn.replacingOccurrences(of: "T", with: " ")
          
         let dateFormatterGet = DateFormatter()

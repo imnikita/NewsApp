@@ -28,14 +28,13 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
         newsTimelineTable.rowHeight = 175
         requestManager.getData()
         
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing...")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         newsTimelineTable.addSubview(refreshControl)
         
     }
     
     @objc func refresh(_ sender: AnyObject) {
-       // Code to refresh table view
         requestManager.getData()
         refreshControl.endRefreshing()
     }
@@ -91,11 +90,12 @@ extension NewsTimelineVC: RequestMamagerDelegate{
             authorSubstring = jsonData["articles"][article]["author"].string ?? "Article from editor"
             authorSubstring = authorVerification(autorStr: authorSubstring!)
             
-            if let publishedTime = jsonData["articles"][article]["publishedAt"].string?.dateStrFormating(),
+            if let publishedTime = jsonData["articles"][article]["publishedAt"].string,
                let title = jsonData["articles"][article]["title"].string,
                let urlToImage = jsonData["articles"][article]["urlToImage"].url,
                let urlToSite = jsonData["articles"][article]["url"].url{
-                let article = NewsModel(author: authorSubstring, title: title, postTime: publishedTime, urlToImage: urlToImage, urlToSite: urlToSite)
+                let formatedTime = publishedTime.dateStrFormating()
+                let article = NewsModel(author: authorSubstring, title: title, postTime: formatedTime, urlToImage: urlToImage, urlToSite: urlToSite)
                 self.articlesArray.append(article)
             }
         }
