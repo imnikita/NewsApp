@@ -10,7 +10,7 @@ import SwiftyJSON
 
 
 protocol RequestMamagerDelegate {
-    func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON)
+    func didUpdateWeather(_ requestManager: RequestManager, jsonData: JSON)
     func didFailWithError(error: Error)
 }
 
@@ -18,15 +18,14 @@ protocol RequestMamagerDelegate {
 
 struct RequestManager{
     
-    
     var delegate: RequestMamagerDelegate?
     
     private let baseURL = "https://newsapi.org/v2/"
-    private let apiKey = "4e85f6e8b5f5497cb1e115bbbd64e9c2"
+    private let apiKey = "API_Key"
     
     func getData(){
         
-    let initialUrl = URL(string: "\(baseURL)top-headlines?country=us&apiKey=\(apiKey)&pageSize=80")
+    let initialUrl = URL(string: "\(baseURL)top-headlines?country=ua&apiKey=\(apiKey)&pageSize=80")
         
         let request = URLRequest(url: initialUrl!)
         let session = URLSession(configuration: .default)

@@ -19,7 +19,6 @@ class NewsCell: UITableViewCell {
         layer.borderWidth = 1
         layer.cornerRadius = 5
         newsTitle.adjustsFontSizeToFitWidth = true
-        self.frame = self.frame.inset(by: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15))
         self.selectionStyle = .none
     }
 }
