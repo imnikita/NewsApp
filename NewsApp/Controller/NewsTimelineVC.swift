@@ -81,7 +81,6 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
 // MARK: - RequestMamagerDelegate extension
 
 
-
 extension NewsTimelineVC: RequestMamagerDelegate{
     
     func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
