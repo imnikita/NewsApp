@@ -21,9 +21,12 @@ struct RequestManager{
     
     var delegate: RequestMamagerDelegate?
     
+    private let baseURL = "https://newsapi.org/v2/"
+    private let apiKey = "4e85f6e8b5f5497cb1e115bbbd64e9c2"
+    
     func getData(){
         
-    let initialUrl = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=4e85f6e8b5f5497cb1e115bbbd64e9c2")
+    let initialUrl = URL(string: "\(baseURL)top-headlines?country=us&apiKey=\(apiKey)&pageSize=20")
         
         let request = URLRequest(url: initialUrl!)
         let session = URLSession(configuration: .default)
@@ -35,6 +38,7 @@ struct RequestManager{
             if let saveData = data{
                 do{
                     let json = try JSON(data: saveData)
+//                    print(json)
                     self.delegate?.didUpdateWeather(self, jsonData: json)
                 }
                 catch{

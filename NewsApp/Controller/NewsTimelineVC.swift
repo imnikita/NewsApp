@@ -73,29 +73,33 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    
 }
 
 
 
 // MARK: - RequestMamagerDelegate extension
 
+
 extension NewsTimelineVC: RequestMamagerDelegate{
+    
     func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
         articlesArray = []
+        var authorSubstring: String?
 
         for article in 0...jsonData["articles"].count{
+            authorSubstring = jsonData["articles"][article]["author"].string ?? "Article from editor"
             if let publishedTime = jsonData["articles"][article]["publishedAt"].string?.dateStrFormating(),
                let title = jsonData["articles"][article]["title"].string,
-               let source = jsonData["articles"][article]["source"]["name"].string,
-               let author = jsonData["articles"][article]["author"].string,
                let urlToImage = jsonData["articles"][article]["urlToImage"].url,
                let urlToSite = jsonData["articles"][article]["url"].url{
-                let article = NewsModel(source: source, author: author, title: title, postTime: publishedTime, urlToImage: urlToImage, urlToSite: urlToSite)
+                let article = NewsModel(author: authorSubstring, title: title, postTime: publishedTime, urlToImage: urlToImage, urlToSite: urlToSite)
                 self.articlesArray.append(article)
             }
         }
         DispatchQueue.main.async {
             self.newsTimelineTable.reloadData()
+            print(self.articlesArray.count)
         }
     }
     

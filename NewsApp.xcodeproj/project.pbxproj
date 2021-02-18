@@ -71,11 +71,11 @@
 				119DE2A325DC40C900568D7C /* Controller */,
 				119DE28D25DC40A600568D7C /* AppDelegate.swift */,
 				119DE28F25DC40A600568D7C /* SceneDelegate.swift */,
+				11C542D025DD0B8D007D5163 /* extensions.swift */,
 				119DE29325DC40A600568D7C /* Main.storyboard */,
 				119DE29625DC40AB00568D7C /* Assets.xcassets */,
 				119DE29825DC40AB00568D7C /* LaunchScreen.storyboard */,
 				119DE29B25DC40AB00568D7C /* Info.plist */,
-				11C542D025DD0B8D007D5163 /* extensions.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";

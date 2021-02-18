@@ -46,7 +46,6 @@ extension String{
         let dateFormatterSet = DateFormatter()
         dateFormatterSet.dateFormat = "dd.MM.yyyy HH:mm"
        
-        
         let date = dateFormatterGet.date(from: dateToReturn)
         return dateFormatterSet.string(from: date ?? Date())
     }
