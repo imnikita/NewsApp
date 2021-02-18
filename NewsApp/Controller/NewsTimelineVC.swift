@@ -87,8 +87,14 @@ extension NewsTimelineVC: RequestMamagerDelegate{
         articlesArray = []
         var authorSubstring: String?
 
+        
         for article in 0...jsonData["articles"].count{
             authorSubstring = jsonData["articles"][article]["author"].string ?? "Article from editor"
+            authorSubstring = authorVerification(autorStr: authorSubstring!)
+//            authorSubstring = authorSubstring?.truncateAll(after: "[")
+//            authorSubstring = authorSubstring?.truncateAll(after: "https:")
+//            authorSubstring = authorSubstring != "" ? authorSubstring : "Article from editor"
+            
             if let publishedTime = jsonData["articles"][article]["publishedAt"].string?.dateStrFormating(),
                let title = jsonData["articles"][article]["title"].string,
                let urlToImage = jsonData["articles"][article]["urlToImage"].url,
@@ -99,9 +105,10 @@ extension NewsTimelineVC: RequestMamagerDelegate{
         }
         DispatchQueue.main.async {
             self.newsTimelineTable.reloadData()
-            print(self.articlesArray.count)
         }
     }
+    
+
     
     
     func didFailWithError(error: Error) {

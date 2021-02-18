@@ -8,6 +8,7 @@
 import UIKit
 
 
+
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -49,4 +50,14 @@ extension String{
         let date = dateFormatterGet.date(from: dateToReturn)
         return dateFormatterSet.string(from: date ?? Date())
     }
+    
+}
+
+
+// MARK: - Global functions
+
+func authorVerification(autorStr: String) -> String?{
+    var author = autorStr.truncateAll(after: "[").truncateAll(after: "https:")
+    author = author != "" ? author : "Article from editor"
+    return author
 }

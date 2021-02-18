@@ -26,7 +26,7 @@ struct RequestManager{
     
     func getData(){
         
-    let initialUrl = URL(string: "\(baseURL)top-headlines?country=us&apiKey=\(apiKey)&pageSize=20")
+    let initialUrl = URL(string: "\(baseURL)top-headlines?country=us&apiKey=\(apiKey)&pageSize=80")
         
         let request = URLRequest(url: initialUrl!)
         let session = URLSession(configuration: .default)
