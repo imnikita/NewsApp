@@ -61,3 +61,8 @@ func authorVerification(autorStr: String) -> String?{
     author = author != "" ? author : "Article from editor"
     return author
 }
+
+let apiKey = "&apiKey=4e85f6e8b5f5497cb1e115bbbd64e9c2"
+var pageNumber = 0
+let baseURL = "https://newsapi.org/v2/top-headlines?country=ua\(apiKey)&page="
+

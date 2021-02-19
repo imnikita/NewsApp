@@ -12,25 +12,19 @@ import SwiftyJSON
 protocol RequestMamagerDelegate {
     func didUpdateWeather(_ requestManager: RequestManager, jsonData: JSON)
     func didFailWithError(error: Error)
-//    func nextPageForPagination()
 }
 
 
 
 struct RequestManager{
     
+    
     var delegate: RequestMamagerDelegate?
+
     
-    private let baseURL = "https://newsapi.org/v2/"
-    private let apiKey = "&apiKey=4e85f6e8b5f5497cb1e115bbbd64e9c2"
-    
-    var sourcesRequest = "sources?"
-    var headlines = "top-headlines?"
-    
-    
-    func getData(){
+    func getData(withURL url: String, pageNumber: Int){
         
-    let requestUrl = URL(string: "\(baseURL + headlines)country=ua\(apiKey)&page=1")
+        let requestUrl = URL(string: url + String(pageNumber))
         
         let request = URLRequest(url: requestUrl!)
         let session = URLSession(configuration: .default)
@@ -42,7 +36,7 @@ struct RequestManager{
             if let saveData = data{
                 do{
                     let json = try JSON(data: saveData)
-                    print(json)
+//                    print(json)
                     self.delegate?.didUpdateWeather(self, jsonData: json)
                 }
                 catch{

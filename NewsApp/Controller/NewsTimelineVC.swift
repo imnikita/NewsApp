@@ -10,7 +10,10 @@ import SwiftyJSON
 import SafariServices
 
 
-class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NewsTimelineVC: UIViewController{
+    
+    var pageNumber = 1
+    
     
     var requestManager = RequestManager()
     var articlesArray = [NewsModel]()
@@ -20,27 +23,45 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var newsTimelineTable: UITableView!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         newsTimelineTable.dataSource = self
         newsTimelineTable.delegate = self
         requestManager.delegate = self
         newsTimelineTable.rowHeight = 175
-        requestManager.getData()
+//        newsTimelineTable.tableFooterView = UIView(frame: .zero)
+        
+        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
+        
         
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing...")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         newsTimelineTable.addSubview(refreshControl)
-        
     }
     
+    
+    
     @objc func refresh(_ sender: AnyObject) {
-        requestManager.getData()
+        viewDidLoad()
         refreshControl.endRefreshing()
     }
     
     
-// MARK: - UITableViewDelegate methods
+    @IBAction func buttonIsPressed(_ sender: Any) {
+        print("---------------------------------------------------")
+        print(pageNumber)
+        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
+        pageNumber += 1
+        print(pageNumber)
+        print("---------------------------------------------------")
+    }
+    
+    
+}
+// MARK: - Extension UITableViewDelegate methods
+
+extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         1
@@ -58,6 +79,10 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.newsTitle.text = articlesArray[indexPath.row].title
             cell.authorNameAndSource.text = articlesArray[indexPath.row].author
             cell.newsImage.load(url: articlesArray[indexPath.row].urlToImage!)
+//            if indexPath.row == articlesArray.count - 1{
+//                requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
+//                pageNumber += 1
+//            }
             return cell
         }else{
             return NewsCell()
@@ -76,16 +101,15 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
 }
 
 
-
 // MARK: - RequestMamagerDelegate extension
 
 
 extension NewsTimelineVC: RequestMamagerDelegate{
     
     func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
-        articlesArray = []
+        
         var authorSubstring: String?
-
+        
         for article in 0...jsonData["articles"].count{
             authorSubstring = jsonData["articles"][article]["author"].string ?? "Article from editor"
             authorSubstring = authorVerification(autorStr: authorSubstring!)
@@ -109,4 +133,7 @@ extension NewsTimelineVC: RequestMamagerDelegate{
         print(error)
     }
 }
+
+
+
 
