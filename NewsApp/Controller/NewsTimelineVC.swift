@@ -83,7 +83,7 @@ class NewsTimelineVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
 extension NewsTimelineVC: RequestMamagerDelegate{
     
-    func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
+    func didUpdateData(_ weatherManager: RequestManager, jsonData: JSON) {
         articlesArray = []
         var authorSubstring: String?
 
