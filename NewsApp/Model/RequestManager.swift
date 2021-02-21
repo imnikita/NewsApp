@@ -10,7 +10,7 @@ import SwiftyJSON
 
 
 protocol RequestMamagerDelegate {
-    func didUpdateWeather(_ requestManager: RequestManager, jsonData: JSON)
+    func didUpdateData(_ requestManager: RequestManager, jsonData: JSON)
     func didFailWithError(error: Error)
 }
 
@@ -21,7 +21,6 @@ struct RequestManager{
     
     var delegate: RequestMamagerDelegate?
 
-    
     func getData(withURL url: String, pageNumber: Int){
         
         let requestUrl = URL(string: url + String(pageNumber))
@@ -36,8 +35,8 @@ struct RequestManager{
             if let saveData = data{
                 do{
                     let json = try JSON(data: saveData)
-//                    print(json)
-                    self.delegate?.didUpdateWeather(self, jsonData: json)
+                    print(json)
+                    self.delegate?.didUpdateData(self, jsonData: json)
                 }
                 catch{
                     print(error)

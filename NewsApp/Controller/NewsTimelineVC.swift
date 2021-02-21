@@ -13,27 +13,29 @@ import SafariServices
 class NewsTimelineVC: UIViewController{
     
     var pageNumber = 1
-    
+    var baseURL = "https://newsapi.org/v2/top-headlines?country=ua&apiKey=534ac317a6df498aab7b6bfe0c76d0fb&pageSize=15&page="
     
     var requestManager = RequestManager()
     var articlesArray = [NewsModel]()
+
     
     var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var newsTimelineTable: UITableView!
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        articlesArray = []
+        newsTimelineTable.reloadData()
         newsTimelineTable.dataSource = self
         newsTimelineTable.delegate = self
         requestManager.delegate = self
         newsTimelineTable.rowHeight = 175
-//        newsTimelineTable.tableFooterView = UIView(frame: .zero)
-        
-        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
-        
         
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing...")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -43,22 +45,15 @@ class NewsTimelineVC: UIViewController{
     
     
     @objc func refresh(_ sender: AnyObject) {
+        pageNumber = 1
         viewDidLoad()
         refreshControl.endRefreshing()
     }
-    
-    
-    @IBAction func buttonIsPressed(_ sender: Any) {
-        print("---------------------------------------------------")
-        print(pageNumber)
-        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
-        pageNumber += 1
-        print(pageNumber)
-        print("---------------------------------------------------")
-    }
-    
+
     
 }
+
+
 // MARK: - Extension UITableViewDelegate methods
 
 extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
@@ -79,10 +74,6 @@ extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
             cell.newsTitle.text = articlesArray[indexPath.row].title
             cell.authorNameAndSource.text = articlesArray[indexPath.row].author
             cell.newsImage.load(url: articlesArray[indexPath.row].urlToImage!)
-//            if indexPath.row == articlesArray.count - 1{
-//                requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
-//                pageNumber += 1
-//            }
             return cell
         }else{
             return NewsCell()
@@ -96,8 +87,6 @@ extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
             present(vc, animated: true, completion: nil)
         }
     }
-    
-    
 }
 
 
@@ -105,8 +94,10 @@ extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
 
 
 extension NewsTimelineVC: RequestMamagerDelegate{
+     
     
-    func didUpdateWeather(_ weatherManager: RequestManager, jsonData: JSON) {
+    
+    func didUpdateData(_ weatherManager: RequestManager, jsonData: JSON) {
         
         var authorSubstring: String?
         

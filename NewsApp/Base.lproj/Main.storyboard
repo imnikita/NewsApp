@@ -91,13 +91,7 @@
                             <constraint firstAttribute="bottom" secondItem="wv3-TA-soo" secondAttribute="bottom" id="xXX-Wy-8JS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="y6y-nM-Sq9">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="bgw-fj-mrJ">
-                            <connections>
-                                <action selector="buttonIsPressed:" destination="BYZ-38-t0r" id="xS9-vO-FA4"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="y6y-nM-Sq9"/>
                     <connections>
                         <outlet property="newsTimelineTable" destination="wv3-TA-soo" id="M0c-be-DPh"/>
                     </connections>
