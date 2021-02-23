@@ -35,7 +35,7 @@ struct RequestManager{
             if let saveData = data{
                 do{
                     let json = try JSON(data: saveData)
-                    print(json)
+//                    print(json)
                     self.delegate?.didUpdateData(self, jsonData: json)
                 }
                 catch{
