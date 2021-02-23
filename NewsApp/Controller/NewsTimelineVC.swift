@@ -13,7 +13,7 @@ import SafariServices
 class NewsTimelineVC: UIViewController{
     
     var pageNumber = 1
-    var baseURL = "https://newsapi.org/v2/top-headlines?country=ua&apiKey=534ac317a6df498aab7b6bfe0c76d0fb&pageSize=15&page="
+    var baseURL = "https://newsapi.org/v2/top-headlines?country=ua&apiKey=534ac317a6df498aab7b6bfe0c76d0fb&pageSize=5&page="
     
     var requestManager = RequestManager()
     var articlesArray = [NewsModel]()
@@ -23,9 +23,6 @@ class NewsTimelineVC: UIViewController{
     
     @IBOutlet weak var newsTimelineTable: UITableView!
     
-    override func viewWillAppear(_ animated: Bool) {
-        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +33,8 @@ class NewsTimelineVC: UIViewController{
         newsTimelineTable.delegate = self
         requestManager.delegate = self
         newsTimelineTable.rowHeight = 175
+        
+        requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
         
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing...")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -74,6 +73,13 @@ extension NewsTimelineVC: UITableViewDataSource, UITableViewDelegate {
             cell.newsTitle.text = articlesArray[indexPath.row].title
             cell.authorNameAndSource.text = articlesArray[indexPath.row].author
             cell.newsImage.load(url: articlesArray[indexPath.row].urlToImage!)
+            if indexPath.row == articlesArray.count - 1{
+                if articlesArray.count < (articlesArray.last?.totalResults!)!{
+                    pageNumber += 1
+                    requestManager.getData(withURL: baseURL, pageNumber: pageNumber)
+                }
+                return cell
+            }
             return cell
         }else{
             return NewsCell()
@@ -97,7 +103,7 @@ extension NewsTimelineVC: RequestMamagerDelegate{
      
     
     
-    func didUpdateData(_ weatherManager: RequestManager, jsonData: JSON) {
+    func didUpdateData(_ requestManager: RequestManager, jsonData: JSON) {
         
         var authorSubstring: String?
         
@@ -108,9 +114,10 @@ extension NewsTimelineVC: RequestMamagerDelegate{
             if let publishedTime = jsonData["articles"][article]["publishedAt"].string,
                let title = jsonData["articles"][article]["title"].string,
                let urlToImage = jsonData["articles"][article]["urlToImage"].url,
-               let urlToSite = jsonData["articles"][article]["url"].url{
+               let urlToSite = jsonData["articles"][article]["url"].url,
+               let totalNumber = jsonData["totalResults"].int{
                 let formatedTime = publishedTime.dateStrFormating()
-                let article = NewsModel(author: authorSubstring, title: title, postTime: formatedTime, urlToImage: urlToImage, urlToSite: urlToSite)
+                let article = NewsModel(author: authorSubstring, title: title, postTime: formatedTime, urlToImage: urlToImage, urlToSite: urlToSite, totalResults: totalNumber)
                 self.articlesArray.append(article)
             }
         }

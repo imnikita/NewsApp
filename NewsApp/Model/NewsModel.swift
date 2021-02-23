@@ -13,4 +13,5 @@ struct NewsModel{
     private(set) public var postTime: String?
     private(set) public var urlToImage: URL?
     private(set) public var urlToSite: URL?
+    private(set) public var totalResults: Int?
 }
